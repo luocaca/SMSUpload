@@ -14,6 +14,10 @@ public class Sms implements Serializable {
     private String body;
     private String date;
 
+    private int subId;
+
+    private String recever;
+
     public String getAddress() {
         return address;
     }
@@ -55,6 +59,22 @@ public class Sms implements Serializable {
     }
 
     private String type;
+
+    public int getSubId() {
+        return subId;
+    }
+
+    public void setSubId(int subId) {
+        this.subId = subId;
+    }
+
+    public String getRecever() {
+        return recever;
+    }
+
+    public void setRecever(String recever) {
+        this.recever = recever;
+    }
 
 //    int index_Address = cur.getColumnIndex("address");
 //    int index_Person = cur.getColumnIndex("person");

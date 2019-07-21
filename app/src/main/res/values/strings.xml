@@ -74,5 +74,5 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
-    <string name="desc">功能简介\n左下角上传按钮，\n右上角设置按钮\n右下角获取短信按钮</string>
+    <string name="desc">功能简介\n左下角上传按钮，\n右上角设置按钮（设置中心新增卡号配置）\n右下角获取短信按钮</string>
 </resources>

@@ -122,7 +122,7 @@ public class SmUtil {
         try {
             Uri uri = Uri.parse(SMS_URI_ALL);
             String[] projection = new String[]{"_id", "address", "person",
-                    "body", "date", "type",};
+                    "body", "date", "type", "sub_id"};
             Cursor cur = context.getContentResolver().query(uri, projection, null,
                     null, "date desc"); // 获取手机内部短信
             // 获取短信中最新的未读短信
@@ -135,6 +135,7 @@ public class SmUtil {
                 int index_Body = cur.getColumnIndex("body");
                 int index_Date = cur.getColumnIndex("date");
                 int index_Type = cur.getColumnIndex("type");
+                int index_sub_id = cur.getColumnIndex("sub_id");
 
                 do {
                     String strAddress = cur.getString(index_Address);
@@ -142,6 +143,7 @@ public class SmUtil {
                     String strbody = cur.getString(index_Body);
                     long longDate = cur.getLong(index_Date);
                     int intType = cur.getInt(index_Type);
+                    int sub_id = cur.getInt(index_sub_id);
 
                     SimpleDateFormat dateFormat = new SimpleDateFormat(
                             "yyyy-MM-dd hh:mm:ss");
@@ -174,6 +176,7 @@ public class SmUtil {
                     smsBuilder.append(strbody + ", ");
                     smsBuilder.append(strDate + ", ");
                     smsBuilder.append(strType);
+                    smsBuilder.append("  sub id -->" + sub_id);
                     smsBuilder.append(" ]\n\n");
 
 
@@ -183,6 +186,17 @@ public class SmUtil {
                     sms1.setBody(strbody);
                     sms1.setDate(strDate);
                     sms1.setType(strType);
+                    sms1.setSubId(sub_id);
+
+                    if (sub_id == 0) {
+
+                        sms1.setRecever(SPUtil.get(context, "card1", "卡1号码未设置").toString());
+                    } else {
+                        sms1.setRecever(SPUtil.get(context, "card2", "卡2号码未设置").toString());
+
+
+                    }
+
                     sms.add(sms1);
 
                 } while (cur.moveToNext());

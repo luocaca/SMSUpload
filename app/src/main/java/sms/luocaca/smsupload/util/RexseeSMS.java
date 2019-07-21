@@ -35,7 +35,7 @@ public class RexseeSMS {
             "read", // 6; 0:not read 1:read; default is 0
             "type", // 7; 0:all 1:inBox 2:sent 3:draft 4:outBox 5:failed
             // 6:queued
-            "service_center" // 8
+            "service_center" // 8,
     };
     public static String[] THREAD_COLUMNS = new String[]{"thread_id",
             "msg_count", "snippet"};

@@ -67,6 +67,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
 
@@ -98,6 +99,26 @@ public class SettingsActivity extends AppCompatActivity {
         }
         SPUtil.put(this, "param", url_edit_para.getText().toString());
         textView1.setText(url_edit_para.getText().toString());
+
+    }
+
+    public void 保存卡1号码(View view) {
+
+        final TextView textContent1 = findViewById(R.id.card_content);
+        final EditText card_edit1 = findViewById(R.id.card_edit1);
+
+        SPUtil.put(view.getContext(), "card1", card_edit1.getText().toString());
+        textContent1.setText(card_edit1.getText().toString());
+
+
+    }
+
+    public void 保存卡2号码(View view) {
+
+        final TextView textContent1 = findViewById(R.id.card_content2);
+        final EditText card_edit1 = findViewById(R.id.card_edit2);
+        SPUtil.put(view.getContext(), "card1", card_edit1.getText().toString());
+        textContent1.setText(card_edit1.getText().toString());
 
     }
 }

@@ -23,11 +23,9 @@ import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Response;
-import sms.luocaca.smsupload.entity.SMSBean;
 import sms.luocaca.smsupload.entity.Sms;
 import sms.luocaca.smsupload.setting.SettingsActivity;
 import sms.luocaca.smsupload.util.GsonUtil;
-import sms.luocaca.smsupload.util.RexseeSMS;
 import sms.luocaca.smsupload.util.SPUtil;
 import sms.luocaca.smsupload.util.SmUtil;
 
@@ -59,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton upload = (FloatingActionButton) findViewById(R.id.upload);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
                 Snackbar.make(view, "正在获取短信列表获取后才可以上传", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
@@ -74,20 +72,36 @@ public class MainActivity extends AppCompatActivity {
 //                String str  = new RexseeSMS(view.getContext()).getData(null,0);
 
 
-                List<Sms> sms = SmUtil.getSmsInPhoneList(view.getContext());
 
-                List<SMSBean> list = new RexseeSMS(view.getContext()).getThreads(0);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final List<Sms> sms = SmUtil.getSmsInPhoneList(view.getContext());
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                content.setText(
+                                        GsonUtil.formateJson(GsonUtil.getGson().toJson(sms)));
+                            }
+                        });
+                    }
+                }).start();
 
 
-                if (sms.size() >= list.size()) {
+//                List<SMSBean> list = new RexseeSMS(view.getContext()).getThreads(0);
 
-                    content.setText(
-                            GsonUtil.formateJson(GsonUtil.getGson().toJson(sms)));
 
-                } else {
-                    content.setText(
-                            GsonUtil.formateJson(GsonUtil.getGson().toJson(list)));
-                }
+//                if (sms.size() >= list.size()) {
+
+
+
+//                content.setText(new PhoneInfoUtils(view.getContext()).getNativePhoneNumber());
+
+//                } else {
+//                    content.setText(
+//                            GsonUtil.formateJson(GsonUtil.getGson().toJson(list)));
+//                }
 
 //                content.setText(
 //                        GsonUtil.formateJson(GsonUtil.getGson().toJson(SmUtil.getSmsInPhoneList(view.getContext())))
@@ -198,6 +212,11 @@ public class MainActivity extends AppCompatActivity {
                                 Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
             }
         }
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
+//                != PackageManager.PERMISSION_GRANTED) {
+//
+//        }
+
     }
 
 
